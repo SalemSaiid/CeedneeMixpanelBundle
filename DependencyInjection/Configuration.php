@@ -20,9 +20,14 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ceednee_mixpanel');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->booleanNode('enabled')->isRequired()->cannotBeEmpty()->defaultTrue()->end()
+                ->scalarNode('api_url')->defaultValue('http://mixpanel.com/api/2.0/events/')->cannotBeEmpty()->end()
+                ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('api_secret')->isRequired()->cannotBeEmpty()->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
