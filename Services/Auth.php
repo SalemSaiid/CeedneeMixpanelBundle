@@ -62,13 +62,10 @@ class Auth
     {
         date_default_timezone_set('UTC');
 
-        $t = time();
-        $x = $t+date("Z",$t);
-        $current_utc_time = $x;
-
-        print_r($x);
+        $current_utc_time =  time() + date('Z', time());
 
         $this->params['request_expiration_time'] = $current_utc_time + $time;
+        $this->params['humanized_request_expiration_time'] = gmdate('M d Y H:i:s', $this->params['request_expiration_time']);
 
         return $this;
     }
