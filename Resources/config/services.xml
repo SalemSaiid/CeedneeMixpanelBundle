@@ -21,7 +21,7 @@
     <services>
         <service id="ceednee.mixpanel.auth" class="%ceednee.mixpanel.auth.class%">
             <argument>%ceednee.mixpanel.api_key%</argument>
-            <argument>%ceednee.mixpanel.api_secret%</argument<name />
+            <argument>%ceednee.mixpanel.api_secret%</argument>
         </service>
 
         <service id="ceednee.mixpanel.export" class="%ceednee.mixpanel.export.class%" />
