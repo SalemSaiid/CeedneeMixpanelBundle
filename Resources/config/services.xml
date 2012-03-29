@@ -4,17 +4,34 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="ceednee_mixpanel.example.class">Ceednee\CeedneeMixpanelBundle\Example</parameter>
+        <parameter key="ceednee.mixpanel.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Mixpanel</parameter>
+        <parameter key="ceednee.mixpanel.auth.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Auth</parameter>
+        <parameter key="ceednee.mixpanel.export.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Export</parameter>
+        <parameter key="ceednee.mixpanel.event.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Event</parameter>
+        <parameter key="ceednee.mixpanel.property.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Property</parameter>
+        <parameter key="ceednee.mixpanel.funnel.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Funnel</parameter>
+        <parameter key="ceednee.mixpanel.segmentation.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Segmentation</parameter>
+        <parameter key="ceednee.mixpanel.retention.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Retention</parameter>
+        <parameter key="ceednee.mixpanel.error.class">Ceednee\CeedneeMixpanelBundle\Mixpanel\Error</parameter>
+        <parameter key="ceednee.mixpanel.api_key" />
+        <parameter key="ceednee.mixpanel.api_secret" />
     </parameters>
 
     <services>
-        <service id="ceednee_mixpanel.example" class="%ceednee_mixpanel.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="ceednee.mixpanel.auth" class="%ceednee.mixpanel.auth.class%">
+            <argument>%ceednee.mixpanel.api_key%</argument>
+            <argument>%ceednee.mixpanel.api_secret%</argument>
         </service>
+
+        <service id="ceednee.mixpanel.export" class="%ceednee.mixpanel.export.class%" />
+        <service id="ceednee.mixpanel.event" class="%ceednee.mixpanel.event.class%" />
+        <service id="ceednee.mixpanel.property" class="%ceednee.mixpanel.property.class%" />
+        <service id="ceednee.mixpanel.funnel" class="%ceednee.mixpanel.funnel.class%" />
+        <service id="ceednee.mixpanel.segmentation" class="%ceednee.mixpanel.segmentation.class%" />
+        <service id="ceednee.mixpanel.retention" class="%ceednee.mixpanel.retention.class%" />
+        <service id="ceednee.mixpanel.error" class="%ceednee.mixpanel.error.class%" />
+        <service id="ceednee.mixpanel" class="%ceednee.mixpanel.class%" scope="request" />
     </services>
-    -->
+
 </container>
