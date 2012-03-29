@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->booleanNode('enabled')->isRequired()->cannotBeEmpty()->defaultTrue()->end()
+                ->scalarNode('expiration_time')->defaultValue(300)->end()
                 ->scalarNode('api_url')->defaultValue('http://mixpanel.com/api/2.0/events/')->cannotBeEmpty()->end()
                 ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('api_secret')->isRequired()->cannotBeEmpty()->end()
