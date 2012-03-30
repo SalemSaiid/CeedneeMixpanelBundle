@@ -14,6 +14,9 @@ class DefaultController extends Controller
      */
     public function indexAction($name)
     {
-        return array('name' => $name);
+        $event = $this->get('ceednee.mixpanel.event');
+        print $event->generateSignature();
+
+        //return array('name' => $name);
     }
 }
