@@ -32,14 +32,14 @@ class Mixpanel
     public function __construct(ContainerBuilder $container)
     {
         $this->container = $container;
-        $this->auth = $this->container->get('ceednee.mixpanel.auth');
-        $this->export = $this->container->get('ceednee.mixpanel.export');
-        $this->event = $this->container->get('ceednee.mixpanel.event');
-        $this->property = $this->container->get('ceednee.mixpanel.property');
-        $this->funnel = $this->container->get('ceednee.mixpanel.funnel');
-        $this->segmentation = $this->container->get('ceednee.mixpanel.segmentation');
-        $this->retention = $this->container->get('ceednee.mixpanel.retention');
-        $this->error = $this->container->get('ceednee.mixpanel.error');
+        $this->auth = $this->container->get('ceednee_mixpanel.auth');
+        $this->export = $this->container->get('ceednee_mixpanel.export');
+        $this->event = $this->container->get('ceednee_mixpanel.event');
+        $this->property = $this->container->get('ceednee_mixpanel.property');
+        $this->funnel = $this->container->get('ceednee_mixpanel.funnel');
+        $this->segmentation = $this->container->get('ceednee_mixpanel.segmentation');
+        $this->retention = $this->container->get('ceednee_mixpanel.retention');
+        $this->error = $this->container->get('ceednee_mixpanel.error');
     }
 
     /**
