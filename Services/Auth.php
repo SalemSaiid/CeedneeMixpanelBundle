@@ -11,8 +11,8 @@ class Auth
     /**
      * Constructor
      *
-     * @param string $api_key    The user api key
-     * @param string $api_secret The user api secret
+     * @param $api_key    string    The user api key
+     * @param $api_secret string    The user api secret
      */
     public function __construct($api_key, $api_secret)
     {
@@ -29,7 +29,9 @@ class Auth
     /**
      * Sets the user api key
      *
-     * @param string $api_key The user api key
+     * @param $api_key string   The user api key
+     *
+     * @return \CeedneeMixpanelBundle\Services\Auth
      */
     public function setApiKey($api_key)
     {
@@ -41,7 +43,7 @@ class Auth
     /**
      * Returns the user api key
      *
-     * @return string The user api key
+     * @return string   The user api key
      */
     public function getApiKey()
     {
@@ -51,7 +53,9 @@ class Auth
     /**
      * Sets the user api secret
      *
-     * @param string $api_secret The user api secret
+     * @param $api_secret string    The user api secret
+     *
+     * @return \CeedneeMixpanelBundle\Services\Auth
      */
     public function setApiSecret($api_secret)
     {
@@ -63,7 +67,7 @@ class Auth
     /**
      * Returns the user api secret
      *
-     * @return string The user api secret
+     * @return string   The user api secret
      */
     public function getApiSecret()
     {
@@ -75,20 +79,23 @@ class Auth
      *
      * To learn more see {@link https://mixpanel.com/docs/api-documentation/data-export-api#auth-implementation}
      *
-     * @param integer $time The request expiration time in second (default: 300 | 5mns)
+     * @param $time integer The request expiration time in second (default: 300 | 5mns)
+     *
+     * @return \CeedneeMixpanelBundle\Services\Auth
      */
     public function setExpire($time = 300)
     {
         $current_utc_time =  time() + date('Z', time());
 
         $this->params['expire'] = $current_utc_time + $time;
+
         return $this;
     }
 
     /**
      * Gets the request expiration time
      *
-     * @return integer The request expiration time
+     * @return integer  The request expiration time
      */
     public function getExpire()
     {
@@ -98,7 +105,7 @@ class Auth
     /**
      * Gets user signature
      *
-     * @return string The user signatue
+     * @return string   The user signatue
      */
     public function getSignature()
     {
@@ -108,7 +115,7 @@ class Auth
     /**
      * Gets all parameters
      *
-     * @return array An array of parameters
+     * @return array    An array of parameters
      */
     public function getParams()
     {

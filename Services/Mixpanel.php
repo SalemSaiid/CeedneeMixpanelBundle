@@ -4,13 +4,15 @@ namespace Ceednee\CeedneeMixpanelBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class Mixpanel
+abstract class Mixpanel implements DataInterface
 {
     /**
      *
      */
     protected
+        $params = array(),
         $auth,
+        $url,
         $export,
         $event,
         $property,
@@ -21,13 +23,14 @@ class Mixpanel
 
     /**
      * ContainerBuilder service
-     * @var \ContainerBuilder
+     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
      */
     private $container;
 
     /**
+     * Construct
      *
-     * @param Auth $auth [description]
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     public function __construct(ContainerBuilder $container)
     {
@@ -122,6 +125,37 @@ class Mixpanel
         return $this->error;
     }
 
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return string
+     */
+     public function generateSignature()
+     {
+         ksort($this->params);
+         $string = '';
+
+         foreach ($this->params as $key => $param) {
+             $string .= $key . "=" . $param;
+         }
+
+         return $string;
+     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateUrlRequest(){}
 }
 
 

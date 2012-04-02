@@ -3,16 +3,19 @@ namespace Ceednee\CeedneeMixpanelBundle\Services;
 
 use Ceednee\CeedneeMixpanelBundle\Services\DataInterface;
 
-class Event implements DataInterface
+class Event extends Mixpanel
 {
-    public $container;
-
+    /**
+     *
+     */
     protected
-        $params = array(),
-        $auth,
-        $url,
-        $uri = 'events/';
+        $uri = 'events';
 
+    /**
+     * Constructor
+     *
+     * @param \Ceednee\CeedneeMixpanelBundle\Services\Auth $auth
+     */
     public function __construct(Auth $auth)
     {
         $this->auth = $auth;
@@ -29,21 +32,21 @@ class Event implements DataInterface
      * %22%2C+%22account-page%22%5D&unit=day
      * </p>
      *
-     * @param  array   $event    The event or events that you wish to get data for, encoded as a JSON array.
-     *                           Example format: '["play song", "log in", "add playlist"]'
-     * @param  string  $type     The analysis type you would like to get data for - such as general, unique, or average events.
-     *                           Valid values: 'general', 'unique', or 'average'
-     * @param  string  $unit     This can be 'hour', 'day', 'week', or 'month'.
-     *                           It determines the level of granularity of the data you get back.
-                                 Note that you cannot get hourly uniques.
-     * @param  integer $interval The number of "units" to return data for - hours, days, weeks, or months.
-                                 1 will return data for the current unit (hour, day, week or month).
-                                 2 will return the current and previous units, and so on.
-     * @param  string  $format   The data return format, such as JSON or CSV. Options: 'json' (default), 'csv'
+     * @param  $event   array       The event or events that you wish to get data for, encoded as a JSON array.
+     *                              Example format: '["play song", "log in", "add playlist"]'
+     * @param  $type    string      The analysis type you would like to get data for - such as general, unique, or average events.
+     *                              Valid values: 'general', 'unique', or 'average'
+     * @param  $unit    string      This can be 'hour', 'day', 'week', or 'month'.
+     *                              It determines the level of granularity of the data you get back.
+                                    Note that you cannot get hourly uniques.
+     * @param  $interval integer    The number of "units" to return data for - hours, days, weeks, or months.
+                                    1 will return data for the current unit (hour, day, week or month).
+                                    2 will return the current and previous units, and so on.
+     * @param  $format  string      The data return format, such as JSON or CSV. Options: 'json' (default), 'csv'
      *
-     * @return string            An formatted Url
+     * @return string               An formatted Url
      */
-    public function events(array $event, $type, $unit, $interval, $format='csv')
+    public function getEvents(array $event, $type, $unit, $interval, $format = null)
     {
     }
 
@@ -57,16 +60,18 @@ class Event implements DataInterface
      * f0aa346688cee071cd85d857285a3464&type=unique&expire=1275627103
      * </p>
      *
-     * @param  string  $type  The analysis type you would like to get data for - such as general, unique, or average events.
-     *                        Valid values: 'general', 'unique', or 'average'
-     * @param  integer $limit The maximum number of events to return. Defaults to 100.
-     *                        The maximum this value can be is 100.
+     * @param  $type string     The analysis type you would like to get data for - such as general, unique, or average events.
+     *                          Valid values: 'general', 'unique', or 'average'
+     * @param  $limit integer   The maximum number of events to return. Defaults to 100.
+     *                          The maximum this value can be is 100.
      *
-     * @return string         An formatted Url
+     * @return string            An formatted Url
      */
-    public function top($type, $limit)
+    public function getTop($type, $limit = null)
     {
-        if ($limit > 100) {
+        $this->uri = $this->uri . '/top/';
+
+        if (isset($limit) && 100 < $limit) {
             throw new \Exception(sprintf('The maximum this limit can be is 100'));
         }
     }
@@ -81,56 +86,19 @@ class Event implements DataInterface
      * 6426aa440cf3ecad66165&api_key=f0aa346688cee071cd85d857285a3464&type=general
      * </p>
      *
-     * @param  string  $type  The analysis type you would like to get data for - such as general, unique, or average events.
-     *                        Valid values: 'general', 'unique', or 'average'
-     * @param  integer $limit The maximum number of events to return. Defaults to 255.
+     * @param  $type string     The analysis type you would like to get data for - such as general, unique, or average events.
+     *                          Valid values: 'general', 'unique', or 'average'
+     * @param  $limit integer   The maximum number of events to return. Defaults to 255.
      *
-     * @return string         An formatted Url
+     * @return string           An formatted Url
      */
-    public function names($type, $limit)
+    public function getNames($type, $limit = null)
     {
-        if ($limit > 100) {
-            throw new \Exception(sprintf('The maximum this limit can be is 100'));
+        $this->uri = $this->uri . '/names/';
+
+        if (isset($limit) && 100 < $limit) {
+            throw new \Exception(sprintf('The maximum number of events to return is limited by 255'));
         }
     }
-
-    /**
-     * Gets unique, total, or average data for of a single event and property over the last N days, weeks, or months.
-     * <p>
-     * URI: http://mixpanel.com/api/2.0/events/properties/
-     *
-     * Example URL:
-     * http://mixpanel.com/api/2.0/events/properties?name=feature&interval=7&expire=1275678109&
-     * sig=e0c4bb0c5ead7aeb4cf9b1682e0599a3&api_key=f0aa346688cee071cd85d857285a3464&type=
-     * unique&event=splash+features&unit=day
-     * </p>
-     *
-     */
-    public function propeties($type, $limit)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateSignature()
-    {
-        ksort($this->params);
-        $string = '';
-
-        foreach ($this->params as $key => $param) {
-            $string .= $key . "=" . $param;
-        }
-
-        //$this->params['sig'] =
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateUrlRequest()
-    {
-    }
-
 
 }
