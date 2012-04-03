@@ -23,7 +23,9 @@ class CeedneeMixpanelExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        if (isset($config['enabled']) && $config['enabled']) {
+            $loader->load('services.xml');
+        }
 
         if (! isset($config['api_key'])) {
             throw new \InvalidArgumentException('The "api_key" option must be set');
@@ -35,11 +37,11 @@ class CeedneeMixpanelExtension extends Extension
         }
         $container->setParameter('ceednee.mixpanel.api_secret', $config['api_secret']);
 
-        if (! empty($config['expire'])) {
+        if (isset($config['expire']) && !empty($config['expire'])) {
             $container->setParameter('ceednee.mixpanel.expire', $config['expire']);
         }
 
-        if (! empty($config['api_url'])) {
+        if (isset($config['api_url']) && !empty($config['api_url'])) {
             $container->setParameter('ceednee.mixpanel.api_url', $config['api_url']);
         }
     }
