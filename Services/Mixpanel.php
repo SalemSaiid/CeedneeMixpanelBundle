@@ -7,23 +7,32 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Mixpanel implements DataInterface
 {
     /**
-     *
+     * @var
      */
     protected
         $params = array(),
         $url,
         $prepared_url,
         $signature,
-        $prepared_signature;
-
-    protected $container;
+        $prepared_signature,
+        $container;
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * Returns the existent container
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     /**
@@ -85,11 +94,6 @@ class Mixpanel implements DataInterface
 
         //concatenate the result with the api_secret by appending it
         $string = $string . $this->container;
-
-        print_r($string);
-        exit;
-
-
 
         return $this->prepared_signature = $string;
     }
