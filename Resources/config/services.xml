@@ -24,8 +24,10 @@
             <argument>%ceednee.mixpanel.api_secret%</argument>
         </service>
 
-        <service id="ceednee.mixpanel" class="%ceednee.mixpanel.class%" public="false">
-            <argument type="service" id="service_container" />
+        <service id="ceednee.mixpanel" class="%ceednee.mixpanel.class%" scope="request">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
         <service id="ceednee.mixpanel.export" class="%ceednee.mixpanel.export.class%" />
         <service id="ceednee.mixpanel.event" class="%ceednee.mixpanel.event.class%" />
