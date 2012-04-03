@@ -22,22 +22,38 @@ class Event extends Mixpanel
      * %22%2C+%22account-page%22%5D&unit=day
      * </p>
      *
-     * @param array $event          The event or events that you wish to get data for, encoded as a JSON array.
-     *                              Example format: '["play song", "log in", "add playlist"]'
-     * @param string $type          The analysis type you would like to get data for - such as general, unique, or average events.
-     *                              Valid values: 'general', 'unique', or 'average'
-     * @param string $unit          This can be 'hour', 'day', 'week', or 'month'.
-     *                              It determines the level of granularity of the data you get back.
-                                    Note that you cannot get hourly uniques.
-     * @param integer $interval     The number of "units" to return data for - hours, days, weeks, or months.
-                                    1 will return data for the current unit (hour, day, week or month).
-                                    2 will return the current and previous units, and so on.
-     * @param string $format        The data return format, such as JSON or CSV. Options: 'json' (default), 'csv'
+     * <p>
+     * available parameters:
      *
-     * @return string               An formatted Url
+     * required array $event
+     * The event or events that you wish to get data for, encoded as a JSON array.
+     * Example format: '["play song", "log in", "add playlist"]'
+     *
+     * required string $type
+     * The analysis type you would like to get data for - such as general, unique, or average events.
+     * Valid values: 'general', 'unique', or 'average'
+     *
+     * required string $unit
+     * This can be 'hour', 'day', 'week', or 'month'.
+     * It determines the level of granularity of the data you get back.
+     * Note that you cannot get hourly uniques.
+     *
+     * required integer $interval
+     * The number of "units" to return data for - hours, days, weeks, or months.
+     * 1 will return data for the current unit (hour, day, week or month).
+     * 2 will return the current and previous units, and so on.
+     *
+     * optional string $format
+     * The data return format, such as JSON or CSV. Options: 'json' (default), 'csv'
+     * </p>
+     *
+     * @param array $params An array of parameters
+     *
+     * @return string       An formatted Url
      */
-    public function getEvents(array $event, $type, $unit, $interval, $format = null)
+    public function getEvents(array $params)
     {
+        $sig = $this->calculateSignature($params);
     }
 
     /**
@@ -50,14 +66,23 @@ class Event extends Mixpanel
      * f0aa346688cee071cd85d857285a3464&type=unique&expire=1275627103
      * </p>
      *
-     * @param string $type      The analysis type you would like to get data for - such as general, unique, or average events.
-     *                          Valid values: 'general', 'unique', or 'average'
-     * @param integer $limit    The maximum number of events to return. Defaults to 100.
-     *                          The maximum this value can be is 100.
+     * <p>
+     * available parameters:
      *
-     * @return string           An formatted Url
+     * required string $type
+     * The analysis type you would like to get data for - such as general, unique, or average events.
+     * Valid values: 'general', 'unique', or 'average'
+     *
+     * optional integer $limit
+     * The maximum number of events to return. Defaults to 100.
+     * The maximum this value can be is 100.
+     * </p>
+     *
+     * @param array $params An array of parameters
+     *
+     * @return string       An formatted Url
      */
-    public function getTop($type, $limit = null)
+    public function getTop(array $params)
     {
         $this->uri = $this->uri . '/top/';
 
@@ -76,13 +101,22 @@ class Event extends Mixpanel
      * 6426aa440cf3ecad66165&api_key=f0aa346688cee071cd85d857285a3464&type=general
      * </p>
      *
-     * @param string $type      The analysis type you would like to get data for - such as general, unique, or average events.
-     *                          Valid values: 'general', 'unique', or 'average'
-     * @param integer $limit    The maximum number of events to return. Defaults to 255.
+     * <p>
+     * available parameters:
      *
-     * @return string           An formatted Url
+     * required string $type
+     * The analysis type you would like to get data for - such as general, unique, or average events.
+     * Valid values: 'general', 'unique', or 'average'
+     *
+     * optional integer $limit
+     * The maximum number of events to return. Defaults to 255.
+     * </p>
+     *
+     * @param array $params An array of parameters
+     *
+     * @return string       An formatted Url
      */
-    public function getNames($type, $limit = null)
+    public function getNames(array $params)
     {
         $this->uri = $this->uri . '/names/';
 
