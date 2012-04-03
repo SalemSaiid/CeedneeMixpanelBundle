@@ -24,16 +24,14 @@
             <argument>%ceednee.mixpanel.api_secret%</argument>
         </service>
 
+        <service id="ceednee.mixpanel" class="%ceednee.mixpanel.class%" scope="request" />
         <service id="ceednee.mixpanel.export" class="%ceednee.mixpanel.export.class%" />
-        <service id="ceednee.mixpanel.event" class="%ceednee.mixpanel.event.class%">
-            <argument type="service" id="ceednee.mixpanel.auth" />
-        </service>
+        <service id="ceednee.mixpanel.event" class="%ceednee.mixpanel.event.class%" />
         <service id="ceednee.mixpanel.property" class="%ceednee.mixpanel.property.class%" />
         <service id="ceednee.mixpanel.funnel" class="%ceednee.mixpanel.funnel.class%" />
         <service id="ceednee.mixpanel.segmentation" class="%ceednee.mixpanel.segmentation.class%" />
         <service id="ceednee.mixpanel.retention" class="%ceednee.mixpanel.retention.class%" />
         <service id="ceednee.mixpanel.error" class="%ceednee.mixpanel.error.class%" />
-        <service id="ceednee.mixpanel" class="%ceednee.mixpanel.class%" scope="request" />
     </services>
 
 </container>
