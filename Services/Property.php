@@ -1,25 +1,15 @@
 <?php
 namespace Ceednee\CeedneeMixpanelBundle\Services;
 
-use Ceednee\CeedneeMixpanelBundle\Services\DataInterface;
+use Ceednee\CeedneeMixpanelBundle\Services\Mixpanel;
 
-class Property extends Mixpanel implements DataInterface
+class Property extends Mixpanel
 {
     /**
      *
      */
     protected
         $uri = 'properties';
-
-    /**
-     * Constructor
-     *
-     * @param \Ceednee\CeedneeMixpanelBundle\Services\Auth $auth
-     */
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
 
     /**
      * Gets unique, total, or average data for of a single event and property over the last N days, weeks, or months.
@@ -32,23 +22,23 @@ class Property extends Mixpanel implements DataInterface
      * unique&event=splash+features&unit=day
      * </p>
      *
-     * @param $event    string  The event that you wish to get data for. Note: this is a single event name, not an array.
-     * @param $name     string  The name of the property you would like to get data for.
-     * @param $values   array   The specific property values that you would like to get data for, encoded as a JSON array.
+     * @param string $event     The event that you wish to get data for. Note: this is a single event name, not an array.
+     * @param string $name      The name of the property you would like to get data for.
+     * @param array $values     The specific property values that you would like to get data for, encoded as a JSON array.
      *                          Example: If you have a property 'gender' you may have values 'male', 'female' and 'unknown'
      *                          If you just want data for female and unknown users, you can include a values
      *                          property that looks like '["female", "unknown"]'
-     * @param $type     string  The analysis type you would like to get data for - such as general, unique, or average events.
+     * @param string $type      The analysis type you would like to get data for - such as general, unique, or average events.
      *                          Valid values: 'general', 'unique', or 'average'
-     * @param $unit     string  This can be 'hour', 'day', 'week', or 'month'.
+     * @param string $unit      This can be 'hour', 'day', 'week', or 'month'.
      *                          It determines the level of granularity of the data you get back.
      *                          Note that you cannot get hourly uniques
-     * @param $interval integer The number of "units" to return data for - hours, days, weeks, or months.
+     * @param integer $interval The number of "units" to return data for - hours, days, weeks, or months.
      *                          1 will return data for the current unit (hour, day, week or month).
      *                          2 will return the current and previous units, and so on.
-     * @param $format   string  The data return format, such as JSON or CSV.
+     * @param string $format    The data return format, such as JSON or CSV.
      *                          Options: 'json' (default), 'csv'
-     * @param $limit    integer The maximum number of values to return. Defaults to 255.
+     * @param integer $limit    The maximum number of values to return. Defaults to 255.
      *
      * @return string           An formatted Url
      *
@@ -61,7 +51,7 @@ class Property extends Mixpanel implements DataInterface
     }
 
     /**
-     * Get the top property names for an event.
+     * Gets the top property names for an event.
      * <p>
      * URI: http://mixpanel.com/api/2.0/events/properties/top/
      *
@@ -70,8 +60,8 @@ class Property extends Mixpanel implements DataInterface
      * e14e44db542409686a89bf03ef&api_key=f0aa346688cee071cd85d857285a3464&event=splash+feature
      * </p>
      *
-     * @param $event string     The event that you wish to get data for. Note: this is a single event name, not an array.
-     * @param $limit integer    The maximum number of properties to return. Defaults to 10.
+     * @param string $event     The event that you wish to get data for. Note: this is a single event name, not an array.
+     * @param integer $limit    The maximum number of properties to return. Defaults to 10.
      *
      * @return string           An formatted Url
      */
@@ -85,7 +75,7 @@ class Property extends Mixpanel implements DataInterface
     }
 
     /**
-     * Get the top values for a property.
+     * Gets the top values for a property.
      * <p>
      * URI: http://mixpanel.com/api/2.0/events/properties/values/
      *
@@ -95,12 +85,13 @@ class Property extends Mixpanel implements DataInterface
      * type=general&event=splash+features&unit=day
      * </p>
      *
-     * @param  $event string    The event that you wish to get data for. Note: this is a single event name, not an array.
-     * @param  $name string     The name of the property you would like to get data for.
-     * @param  $limit integer   The maximum number of values to return. Defaults to 255.
-     * @param  $bucket bucket   [Platform] - the specific data bucket you would like to query.
+     * @param string $event  The event that you wish to get data for. Note: this is a single event name, not an array.
+     * @param $name string   The name of the property you would like to get data for.
+     * @param $limit integer The maximum number of values to return. Defaults to 255.
+     * @param $bucket bucket The specific data bucket you would like to query.
+     *                       @see https://mixpanel.com/docs/api-documentation/displaying-mixpanel-data-to-your-users
      *
-     * @return string           An formatted Url
+     * @return string        An formatted Url
      */
     public function getValues($event, $name, $limit = null, $bucket = null)
     {

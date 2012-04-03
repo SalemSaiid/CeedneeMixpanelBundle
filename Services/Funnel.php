@@ -1,7 +1,7 @@
 <?php
 namespace Ceednee\CeedneeMixpanelBundle\Services;
 
-use Ceednee\CeedneeMixpanelBundle\Services\DataInterface;
+use Ceednee\CeedneeMixpanelBundle\Services\Mixpanel;
 
 class Funnel extends Mixpanel
 {
@@ -12,17 +12,7 @@ class Funnel extends Mixpanel
         $uri = 'funnels';
 
     /**
-     * Constructor
-     *
-     * @param \Ceednee\CeedneeMixpanelBundle\Services\Auth $auth
-     */
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
-
-    /**
-     * Get data for a funnel.
+     * Gets data for a funnel.
      *
      * <p>
      * URI: http://mixpanel.com/api/2.0/events/
@@ -63,7 +53,7 @@ class Funnel extends Mixpanel
     }
 
     /**
-     * Get the names and funnel_ids of your funnels. This method takes no parameters.
+     * Gets the names and funnel_ids of your funnels. This method takes no parameters.
      *
      * <p>
      * URI: http://mixpanel.com/api/2.0/funnels/list/

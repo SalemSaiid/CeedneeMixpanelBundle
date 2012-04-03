@@ -16,14 +16,14 @@ Interface DataInterface
      *
      * To learn more see {@link https://mixpanel.com/docs/api-documentation/data-export-api#auth-implementation}
      *
-     * @return string The user signature
+     * @return string   The user signature
      */
     public function generateSignature();
 
     /**
      * Generates the URL request
      *
-     * @return string The URL request to send
+     * @return string   The URL request to send
      */
     public function generateUrlRequest();
 }

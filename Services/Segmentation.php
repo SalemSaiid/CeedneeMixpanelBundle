@@ -1,9 +1,9 @@
 <?php
 namespace Ceednee\CeedneeMixpanelBundle\Services;
 
-use Ceednee\CeedneeMixpanelBundle\Services\DataInterface;
+use Ceednee\CeedneeMixpanelBundle\Services\Mixpanel;
 
-class Segmentation extends Mixpanel implements DataInterface
+class Segmentation extends Mixpanel
 {
     /**
      *
@@ -12,17 +12,7 @@ class Segmentation extends Mixpanel implements DataInterface
         $uri = 'segmentation';
 
     /**
-     * Constructor
-     *
-     * @param \Ceednee\CeedneeMixpanelBundle\Services\Auth $auth
-     */
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
-
-    /**
-     * Get data for an event, segmented and filtered by properties.
+     * Gets data for an event, segmented and filtered by properties.
      *
      * <p>
      * URI: http://mixpanel.com/api/2.0/segmentation/
@@ -56,31 +46,31 @@ class Segmentation extends Mixpanel implements DataInterface
     }
 
     /**
-     * Get data for an event, segmented and filtered by properties, with values placed into numeric buckets.
+     * Gets data for an event, segmented and filtered by properties, with values placed into numeric buckets.
      *
      * <p>
      * URI: http://mixpanel.com/api/2.0/segmentation/numeric/
      * </p>
      *
-     * @param  $event       string      The event that you wish to segment on.
-     * @param  $from_date   string      The date in yyyy-mm-dd format from which to begin querying for the event from. This date is inclusive.
-     * @param  $to_date     string      The date in yyyy-mm-dd format from which to stop querying for the event from. This date is inclusive.
-     *                                  The date range may not be more than 30 days.
-     * @param  $on          string      The property expression to segment the event on.
-     *                                  @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
-     * @param  $bucket      integer     The number of buckets that you wish to divide the numeric values up into.
-     *                                  We automatically compute the bucket ranges based on the maximum and minimum of your 'on' expression.
-     * @param  $unit        string      This can be 'hour' or 'day'.
-     *                                  This determines the buckets into which the property values that you segment on are placed.
-     *                                  The default value is 'day'.
-     * @param  $where       string      An expression to filter events by.
-     *                                  @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
-     * @param  $type        string      This can be 'general' or 'unique'.
-     *                                  If this is set to 'unique', we return the unique count of events or property values.
-     *                                  If not, we return the total, including repeats.
-     *                                  The default value is 'general'.
+     * @param string $event     The event that you wish to segment on.
+     * @param string $from_date The date in yyyy-mm-dd format from which to begin querying for the event from. This date is inclusive.
+     * @param string $to_date   The date in yyyy-mm-dd format from which to stop querying for the event from. This date is inclusive.
+     *                          The date range may not be more than 30 days.
+     * @param string $on        The property expression to segment the event on.
+     *                          @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
+     * @param integer $bucket   The number of buckets that you wish to divide the numeric values up into.
+     *                          We automatically compute the bucket ranges based on the maximum and minimum of your 'on' expression.
+     * @param string $unit      This can be 'hour' or 'day'.
+     *                          This determines the buckets into which the property values that you segment on are placed.
+     *                          The default value is 'day'.
+     * @param string $where     An expression to filter events by.
+     *                          @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
+     * @param string $type      This can be 'general' or 'unique'.
+     *                          If this is set to 'unique', we return the unique count of events or property values.
+     *                          If not, we return the total, including repeats.
+     *                          The default value is 'general'.
      *
-     * @return string An formatted Url
+     * @return string           An formatted Url
      */
     public function getNumeric($event, $from_date, $to_date, $on, $bucket, $unit = null, $where = null, $type = null)
     {
@@ -93,21 +83,20 @@ class Segmentation extends Mixpanel implements DataInterface
      * URI: http://mixpanel.com/api/2.0/segmentation/sum/
      * </p>
      *
-     * @param  $event       string      The event that you wish to segment on.
-     * @param  $from_date   string      The date in yyyy-mm-dd format from which to begin querying for the event from. This date is inclusive.
-     * @param  $to_date     string      The date in yyyy-mm-dd format from which to stop querying for the event from.
-     *                                  This date is inclusive. The date range may not be more than 30 days.
-     * @param  $on          string      The expression to sum per unit time. The result of the expression should be a numeric value.
-     *                                  If the expression is not numeric, a value of 0.0 is assumed.
-     *                                  See the expression section below.
-     *                                  @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
-     * @param  $unit        string      This can be 'hour' or 'day'.
-     *                                  This determines the buckets into which the property values that you segment on are placed.
-     *                                  The default value is 'day'.
-     * @param  $where       string      An expression to filter events by.
-     *                                  @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
+     * @param string $event     The event that you wish to segment on.
+     * @param string £from_date The date in yyyy-mm-dd format from which to begin querying for the event from. This date is inclusive.
+     * @param string $to_date   The date in yyyy-mm-dd format from which to stop querying for the event from.
+     *                          This date is inclusive. The date range may not be more than 30 days.
+     * @param string $on        The expression to sum per unit time. The result of the expression should be a numeric value.
+     *                          If the expression is not numeric, a value of 0.0 is assumed.
+     *                          @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
+     * @param string $unit      This can be 'hour' or 'day'.
+     *                          This determines the buckets into which the property values that you segment on are placed.
+     *                          The default value is 'day'.
+     * @param string $where     An expression to filter events by.
+     *                          @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
      *
-     * @return string An formatted Url
+     * @return string           An formatted Url
      */
     public function getSum($event, $from_date, $to_date, $on, $unit = null, $where = null)
     {
@@ -121,24 +110,22 @@ class Segmentation extends Mixpanel implements DataInterface
      * URI: http://mixpanel.com/api/2.0/segmentation/average/
      * </p>
      *
-     * @param  $event       string      The event that you wish to segment on.
-     * @param  $from_date   string      The date in yyyy-mm-dd format from which to begin querying for the event from. This date is inclusive.
-     * @param  $to_date     string      The date in yyyy-mm-dd format from which to stop querying for the event from.
-     *                                  This date is inclusive. The date range may not be more than 30 days.
-     * @param  $on          string      The expression to average per unit time. The result of the expression should be a numeric value.
-     *                                  If the expression is not numeric, a value of 0.0 is assumed.
-     *                                  See the expression section below.
-     *                                  @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
-     * @param  $unit        string      This can be 'hour' or 'day'.
-     *                                  This determines the buckets into which the property values that you segment on are placed.
-     *                                  The default value is 'day'.
-     * @param  $where       string      An expression to filter events by.
-     *                                  @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
+     * @param string $event     The event that you wish to segment on.
+     * @param string $from_date The date in yyyy-mm-dd format from which to begin querying for the event from. This date is inclusive.
+     * @param string $to_date   The date in yyyy-mm-dd format from which to stop querying for the event from.
+     *                          This date is inclusive. The date range may not be more than 30 days.
+     * @param string $on        The expression to average per unit time. The result of the expression should be a numeric value.
+     *                          If the expression is not numeric, a value of 0.0 is assumed.
+     *                          @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
+     * @param string $unit      This can be 'hour' or 'day'.
+     *                          This determines the buckets into which the property values that you segment on are placed.
+     *                          The default value is 'day'.
+     * @param string $where     An expression to filter events by.
+     *                          @see https://mixpanel.com/docs/api-documentation/data-export-api#segmentation-expressions
      *
-     * @return string An formatted Url
+     * @return string           An formatted Url
      */
     public function getAverage($event, $from_date, $to_date, $on, $unit = null, $where = null)
     {
     }
-
 }
