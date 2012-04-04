@@ -9,7 +9,7 @@ class Event extends Mixpanel
      *
      */
     protected
-        $uri = 'events';
+        $end_point = 'events';
 
     /**
      * Gets unique, total, or average data for a set of events over the last N days, weeks, or months.
@@ -53,7 +53,7 @@ class Event extends Mixpanel
      */
     public function getEvents(array $params = array())
     {
-        $sig = $this->calculateSignature($params);
+        $sig = $this->generateSignature($params);
     }
 
     /**
