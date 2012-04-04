@@ -20,12 +20,14 @@ Interface GeneratorInterface
      *
      * @return string   The user signature
      */
-    public function generateSignature($params);
+    public function prepareSignature($params);
 
     /**
      * Generates the URL request
      *
+     * @param $params   An array of parameters
+     *
      * @return string   The URL request to send
      */
-    public function generateUrlRequest($params);
+    public function prepareUrlRequest($params);
 }
