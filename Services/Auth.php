@@ -14,10 +14,9 @@ class Auth
      * @param $api_key    string    The user api key
      * @param $api_secret string    The user api secret
      */
-    public function __construct($api_key, $api_secret)
+    public function __construct($params)
     {
-        $this->params['api_key'] = $api_key;
-        $this->params['api_secret'] = $api_secret;
+        $this->params['ceednee_mixpanel'] = $params;
 
         $this->run();
     }

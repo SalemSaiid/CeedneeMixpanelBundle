@@ -14,20 +14,24 @@
         <parameter key="ceednee.mixpanel.segmentation.class">Ceednee\CeedneeMixpanelBundle\Services\Segmentation</parameter>
         <parameter key="ceednee.mixpanel.retention.class">Ceednee\CeedneeMixpanelBundle\Services\Retention</parameter>
         <parameter key="ceednee.mixpanel.error.class">Ceednee\CeedneeMixpanelBundle\Services\Error</parameter>
-        <parameter key="ceednee.mixpanel.api_key" />
-        <parameter key="ceednee.mixpanel.api_secret" />
+        <parameter key="ceednee.mixpanel" type="collection">
+            <parameter key="ceednee.mixpanel.parameters" type="collection">
+                <parameter></parameter>
+                <parameter></parameter>
+                <parameter></parameter>
+                <parameter></parameter>
+            </parameter>
+        </parameter>
+
     </parameters>
 
     <services>
         <service id="ceednee.mixpanel.auth" class="%ceednee.mixpanel.auth.class%">
-            <argument>%ceednee.mixpanel.api_key%</argument>
-            <argument>%ceednee.mixpanel.api_secret%</argument>
+            <argument>%ceednee.mixpanel.parameters%</argument>
         </service>
 
         <service id="ceednee.mixpanel" class="%ceednee.mixpanel.class%" scope="request">
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
+            <argument type="service" id="ceednee.mixpanel.auth" />
         </service>
         <service id="ceednee.mixpanel.export" class="%ceednee.mixpanel.export.class%" />
         <service id="ceednee.mixpanel.event" class="%ceednee.mixpanel.event.class%" />

@@ -2,7 +2,8 @@
 namespace Ceednee\CeedneeMixpanelBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use Ceednee\CeedneeMixpanelBundle\Services\GeneratorInterface;
+use Ceednee\CeedneeMixpanelBundle\Services\Auth;
 
 class Mixpanel implements GeneratorInterface
 {
@@ -10,12 +11,20 @@ class Mixpanel implements GeneratorInterface
      * @var
      */
     protected
+        $auth = null,
         $params = array(),
         $url,
         $prepared_url,
         $signature,
         $prepared_signature,
         $container;
+
+
+    public function __construct(Auth $auth = null)
+    {
+        $this->auth = $auth;
+    }
+
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -33,6 +42,13 @@ class Mixpanel implements GeneratorInterface
     public function getContainer()
     {
         return $this->container;
+    }
+
+    /**
+     */
+    public function getAuth()
+    {
+        return $this->auth;
     }
 
     /**
@@ -65,14 +81,27 @@ class Mixpanel implements GeneratorInterface
         return $this->signature;
     }
 
-
-    public function calculateSignature($params)
+    /**
+     * @param $params
+     *
+     * This code is based on the mixpanel api php example
+     * see {@link https://mixpanel.com/site_media//api/v2/mixpanel.phps}
+     */
+    public function generateSignature($params)
     {
         $this->params = $params;
 
-        $generated_signature = $this->generateSignature($params);
+        print_r($this->container);
 
-        $generated_url = $this->generateUrlRequest($params);
+        $prepared_signature = $this->prepareSignature($params);
+        $prepared_url = $this->prepareUrlRequest($params);
+
+        //concatenate the result with the api_secret by appending it
+        /*$sig =  $this->getContainer->get('api_url') . '/' .
+                $this->getContainer->get('api_version') . '/' .
+                $prepared_url . '?sig=' . $prepared_signature;
+
+        print $sig;*/
     }
 
 
@@ -83,21 +112,18 @@ class Mixpanel implements GeneratorInterface
      *
      * @return string
      */
-    public function generateSignature($params)
+    public function prepareSignature($params)
     {
-        // join into a string resulting in key=valuekey2=value2
-        $string = '';
-
-        foreach($params as $key => $value) {
-            $string .= $key . '=' . $value;
-        }
-
-        //concatenate the result with the api_secret by appending it
-        $string = $string . $this->container;
+        $string = $this->iterateParams($params, 'sig');
 
         return $this->prepared_signature = $string;
     }
 
+
+    public function generateUrlRequest($params)
+    {
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -105,22 +131,48 @@ class Mixpanel implements GeneratorInterface
      *
      * @return string
      */
-    public function generateUrlRequest($params)
+    public function prepareUrlRequest($params)
+    {
+        $string = $this->iterateParams($params, 'url');
+
+        return $this->prepared_url = $string;
+    }
+
+
+    /**
+     * Iterates throw all params and generates a sig or url string
+     *
+     * @param $params   An array of parameters
+     * @param $type     The type of string to generate defau
+     *
+     * @return string
+     */
+    private function iterateParams($params, $type = 'sig')
     {
         $string = '';
 
-        // sort the parameters you are including with the URL alphabetically
-        ksort($params);
-
         foreach ($params as $key => $value) {
             if (is_array($value)) {
-                $string = json_encode($value);
+                $value = json_encode($value);
+            }
+            if ('url' == $type) {
+                $string .= '&' . urlencode($key) . '=' . urlencode($value);
             }
 
-            $string .= '&' . urlencode($key) . '=' . urlencode($value);
+            if ('sig' == $type) {
+                $string .= $key . '=' . $value;
+            }
         }
 
-        return $this->prepared_url = $string;
+        return $string;
+    }
+
+    /**
+     *
+     */
+    public function send()
+    {
+
     }
 }
 
