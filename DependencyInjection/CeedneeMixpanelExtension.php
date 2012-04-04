@@ -27,27 +27,27 @@ class CeedneeMixpanelExtension extends Extension
             $loader->load('services.xml');
         }
 
-        if (! isset($config['api_key'])) {
+        if (! isset($config['parameters']['api_key'])) {
             throw new \InvalidArgumentException('The "api_key" option must be set');
         }
-        $container->setParameter('ceednee.mixpanel.api_key', $config['api_key']);
+        $container->setParameter('ceednee.mixpanel.api_key', $config['parameters']['api_key']);
 
-        if (! isset($config['api_secret'])) {
+        if (! isset($config['parameters']['api_secret'])) {
             throw new \InvalidArgumentException('The "api_secret" option must be set');
         }
-        $container->setParameter('ceednee.mixpanel.api_secret', $config['api_secret']);
+        $container->setParameter('ceednee.mixpanel.api_secret', $config['parameters']['api_secret']);
 
-        if (! isset($config['api_version'])) {
+        if (! isset($config['parameters']['api_version'])) {
             throw new \InvalidArgumentException('The "api_version" option must be set');
         }
-        $container->setParameter('ceednee.mixpanel.api_version', $config['api_version']);
+        $container->setParameter('ceednee.mixpanel.api_version', $config['parameters']['api_version']);
 
-        if (isset($config['expire']) && !empty($config['expire'])) {
-            $container->setParameter('ceednee.mixpanel.expire', $config['expire']);
+        if (isset($config['parameters']['expire']) && !empty($config['parameters']['expire'])) {
+            $container->setParameter('ceednee.mixpanel.expire', $config['parameters']['expire']);
         }
 
-        if (isset($config['api_url']) && ! empty($config['api_url'])) {
-            $container->setParameter('ceednee.mixpanel.api_url', $config['api_url']);
+        if (isset($config['parameters']['api_url']) && ! empty($config['parameters']['api_url'])) {
+            $container->setParameter('ceednee.mixpanel.api_url', $config['parameters']['api_url']);
         }
     }
 }

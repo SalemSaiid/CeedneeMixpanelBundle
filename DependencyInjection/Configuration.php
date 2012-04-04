@@ -14,6 +14,8 @@ class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritDoc}
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
@@ -23,13 +25,19 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('enabled')->defaultTrue()->cannotBeEmpty()->end()
-                ->scalarNode('expire')->defaultValue(300)->end()
-                ->scalarNode('api_url')->defaultValue('http://mixpanel.com/api/')->cannotBeEmpty()->end()
-                ->scalarNode('api_version')->defaultValue('2.0/')->cannotBeEmpty()->end()
-                ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('api_secret')->isRequired()->cannotBeEmpty()->end()
+                ->arrayNode('parameters')
+                    ->children()
+                        ->scalarNode('expire')->defaultValue(300)->end()
+                        ->scalarNode('api_url')->defaultValue('http://mixpanel.com/api')->cannotBeEmpty()->end()
+                        ->scalarNode('api_version')->defaultValue('2.0')->cannotBeEmpty()->end()
+                        ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('api_secret')->isRequired()->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
+
 
         return $treeBuilder;
     }
