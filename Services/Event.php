@@ -51,7 +51,7 @@ class Event extends Mixpanel
      *
      * @return string       An formatted Url
      */
-    public function getEvents(array $params)
+    public function getEvents(array $params = array())
     {
         $sig = $this->calculateSignature($params);
     }
@@ -82,7 +82,7 @@ class Event extends Mixpanel
      *
      * @return string       An formatted Url
      */
-    public function getTop(array $params)
+    public function getTop(array $params = array())
     {
         $this->uri = $this->uri . '/top/';
 
@@ -94,11 +94,11 @@ class Event extends Mixpanel
     /**
      * Gets a list of the most common events over the last 31 days.
      * <p>
-     * URI: http://mixpanel.com/api/2.0/events/names/
+     * URI: {@link http://mixpanel.com/api/2.0/events/names/}
      *
      * Example URL:
-     * http://mixpanel.com/api/2.0/events/names?expire=1275627103&sig=9f2a0f7024b
-     * 6426aa440cf3ecad66165&api_key=f0aa346688cee071cd85d857285a3464&type=general
+     * {@link http://mixpanel.com/api/2.0/events/names?expire=1275627103&sig=9f2a0f7024b
+     * 6426aa440cf3ecad66165&api_key=f0aa346688cee071cd85d857285a3464&type=general}
      * </p>
      *
      * <p>
@@ -116,7 +116,7 @@ class Event extends Mixpanel
      *
      * @return string       An formatted Url
      */
-    public function getNames(array $params)
+    public function getNames(array $params = array())
     {
         $this->uri = $this->uri . '/names/';
 

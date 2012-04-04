@@ -4,7 +4,7 @@ namespace Ceednee\CeedneeMixpanelBundle\Services;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
-class Mixpanel implements DataInterface
+class Mixpanel implements GeneratorInterface
 {
     /**
      * @var
