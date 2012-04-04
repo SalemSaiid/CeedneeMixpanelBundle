@@ -14,12 +14,12 @@ class Event extends Mixpanel
     /**
      * Gets unique, total, or average data for a set of events over the last N days, weeks, or months.
      * <p>
-     * URI: http://mixpanel.com/api/2.0/events/
+     * URI: {@link http://mixpanel.com/api/2.0/events/}
      *
      * Example URL:
-     * http://mixpanel.com/api/2.0/events/?interval=7&expire=1275624968&sig=046ceec93983811dad0fb20
+     * {@link http://mixpanel.com/api/2.0/events/?interval=7&expire=1275624968&sig=046ceec93983811dad0fb20
      * f842c351a&api_key=f0aa346688cee071cd85d857285a3464&type=average&event=%5B%22splash+features
-     * %22%2C+%22account-page%22%5D&unit=day
+     * %22%2C+%22account-page%22%5D&unit=day}
      * </p>
      *
      * <p>
@@ -59,11 +59,11 @@ class Event extends Mixpanel
     /**
      * Gets the top events for today, with their counts and the normalized percent change from yesterday.
      * <p>
-     * URI: http://mixpanel.com/api/2.0/events/top/
+     * URI: {@link http://mixpanel.com/api/2.0/events/top/}
      *
      * Example URL:
-     * http://mixpanel.com/api/2.0/events/top?sig=02e38a843297d188ee73779ab872cc1e&api_key=
-     * f0aa346688cee071cd85d857285a3464&type=unique&expire=1275627103
+     * {@link http://mixpanel.com/api/2.0/events/top?sig=02e38a843297d188ee73779ab872cc1e&api_key=
+     * f0aa346688cee071cd85d857285a3464&type=unique&expire=1275627103}
      * </p>
      *
      * <p>
