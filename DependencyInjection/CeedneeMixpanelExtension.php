@@ -37,11 +37,16 @@ class CeedneeMixpanelExtension extends Extension
         }
         $container->setParameter('ceednee.mixpanel.api_secret', $config['api_secret']);
 
+        if (! isset($config['api_version'])) {
+            throw new \InvalidArgumentException('The "api_version" option must be set');
+        }
+        $container->setParameter('ceednee.mixpanel.api_version', $config['api_version']);
+
         if (isset($config['expire']) && !empty($config['expire'])) {
             $container->setParameter('ceednee.mixpanel.expire', $config['expire']);
         }
 
-        if (isset($config['api_url']) && !empty($config['api_url'])) {
+        if (isset($config['api_url']) && ! empty($config['api_url'])) {
             $container->setParameter('ceednee.mixpanel.api_url', $config['api_url']);
         }
     }
