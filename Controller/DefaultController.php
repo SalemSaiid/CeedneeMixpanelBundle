@@ -15,10 +15,12 @@ class DefaultController extends Controller
      */
     public function indexAction($name)
     {
-        $event = $this->get('ceednee.mixpanel.event');
-        //var_dump($event->calculateSignature());
+        $event = $this->get('ceednee.mixpanel');
+        print_r($event->getAuth());
 
-        var_dump($event->getEvents(
+        $event = $this->get('ceednee.mixpanel.event');
+        //echo '<pre>';
+        print_r($event->getEvents(
                 array(
                     'event' => array('play song', 'log in'),
                     'type' => 'general',
